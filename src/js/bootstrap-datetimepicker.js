@@ -712,7 +712,11 @@
                     daysViewHeader.eq(2).addClass('disabled');
                 }
 
-                currentDate = viewDate.clone().startOf('M').startOf('w').startOf('d');
+                // hour is changed to avoid DST issues in some browsers
+                currentDate = viewDate.clone().startOf('M').startOf('w').startOf('d').hour(12);
+                if (currentDate.weekday() !== 0) {
+                    currentDate.add(1, 'd');
+                }
 
                 for (i = 0; i < 42; i++) { //always display 42 days (should show 6 weeks)
                     if (currentDate.weekday() === 0) {
